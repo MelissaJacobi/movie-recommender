@@ -28,10 +28,10 @@ app.post("/recommend", async (req, res) => {
     console.log("Received Genre:", genre);
   
     try {
-      const result = await db.query(
-        "SELECT * FROM movies WHERE mood = $1 AND genre = $2",
-        [mood, genre]
-      );
+        const result = await db.query(
+            "SELECT * FROM movies WHERE LOWER(mood) = LOWER($1) AND LOWER(genre) = LOWER($2)",
+            [mood, genre]
+          );
   
       console.log("Query Result:", result.rows);  // Log query results
   
