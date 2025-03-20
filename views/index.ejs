@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommender</title>
+</head>
+<body>
+    <h1>Choose Your Mood and Genre</h1>
+    <form action="/recommend" method="POST">
+        <label for="mood">Mood:</label>
+        <select name="mood" id="mood">
+            <option value="Exciting">Exciting</option>
+            <option value="Feel-good">Feel-good</option>
+            <option value="Mind-bending">Mind-bending</option>
+        </select>
+
+        <label for="genre">Genre:</label>
+        <select name="genre" id="genre">
+            <option value="Action">Action</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Drama">Drama</option>
+        </select>
+
+        <button type="submit">Get Recommendation</button>
+    </form>
+</body>
+</html>
