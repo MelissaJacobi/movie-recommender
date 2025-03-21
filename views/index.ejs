@@ -6,24 +6,27 @@
     <title>Movie Recommender</title>
     <link rel="stylesheet" href="/styles.css"> 
 </head>
+<%- include("partials/header") %>
 <body class="main">
-    <h1>Choose Your Mood and Genre</h1>
-    <form action="/recommend" method="POST">
+    <h1>MOVIE NIGHT?</h1>
+    <h2>Let us know how you're feeling and choose a genre, we'll do the rest!</h2>
+    <form action="/recommend" method="POST" class="form-container">
         <label for="mood">Mood:</label>
-        <select name="mood" id="mood">
+        <select name="mood" id="mood" class="categories">
             <option value="Exciting">Exciting</option>
             <option value="Feel-good">Feel-good</option>
             <option value="Mind-bending">Mind-Bending</option>
         </select>
 
         <label for="genre">Genre:</label>
-        <select name="genre" id="genre">
+        <select name="genre" id="genre" class="categories">
             <option value="Action">Action</option>
             <option value="Comedy">Comedy</option>
             <option value="Drama">Drama</option>
         </select>
 
-        <button type="submit">Get Recommendation</button>
+        <button type="submit" class="submit-btn">Get Recommendation</button>
     </form>
 </body>
+<%- include("partials/footer") %>
 </html>
