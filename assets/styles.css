@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-.main {
+.main, body {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-items: center;
-    min-height: 100svh;
+    min-height: 60vh;
+    flex-grow: 1;
     padding: 80px;
     flex-shrink: 0;
-    margin: 1rem;
     background-color: #FFFBF1;
     overflow-x: hidden;
     font-family: 'Inter';
@@ -55,7 +55,7 @@
     background-color: #fffbfa;
 }
 
-.submit-btn {
+.submit-btn, a {
     margin: 2rem;
     background-color: black;
     padding: 1rem;
@@ -63,18 +63,25 @@
     font-weight: 600;
     font-size: 16px;
     color: #FFFBF1;
+    text-decoration: none;
 }
 
 .footer {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    margin: 1rem 0;
+    width: 100%;
+    font-size: 12px;
 }
 
 .footer p {
     margin: 0;
     padding: 5px;
     font-weight: 500;
+}
+
+ul {
+    list-style: none;
+    margin: 1rem 0;
 }
