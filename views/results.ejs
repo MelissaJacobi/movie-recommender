@@ -4,15 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Recommendations</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+  <%- include("partials/header") %>
+  <main class="main">
     <h1>Recommended Movies</h1>
 
-    <ul>
-      <% movies.forEach(movie => { %>
-        <li><%= movie.movie %></li>
-      <% }) %>
-    </ul>
+    <% if (movies && movies.length > 0) { %>
+      <ul>
+        <% movies.forEach(movie => { %>
+          <li><%= movie.movie %></li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No movies found matching your criteria.</p>
+    <% } %>
     <a href="/">Try Again</a>
+  </main>
 </body>
+<%- include("partials/footer") %>
 </html>
