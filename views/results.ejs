@@ -14,7 +14,8 @@
     <% if (movies && movies.length > 0) { %>
       <ul>
         <% movies.forEach(movie => { %>
-          <li><%= movie.movie %></li>
+          <li class="result"><%= movie.movie %></li>
+          <img src="<%= movie.image_url %>" alt="<%= movie.movie %>" width="200">
         <% }) %>
       </ul>
     <% } else { %>

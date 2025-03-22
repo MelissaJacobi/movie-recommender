@@ -34,7 +34,7 @@ app.post("/recommend", async (req, res) => {
   
     try {
         const result = await db.query(
-            "SELECT * FROM movies WHERE LOWER(mood) = LOWER($1) AND LOWER(genre) = LOWER($2)",
+            "SELECT movie, image_url FROM movies WHERE LOWER(mood) = LOWER($1) AND LOWER(genre) = LOWER($2)",
             [mood, genre]
           );
 
