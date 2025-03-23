@@ -16,13 +16,17 @@
         <% movies.forEach(movie => { %>
           <li class="result"><%= movie.movies %></li>
           <img src="<%= movie.image_url %>" alt="<%= movie.movies %>" width="200">
+          <p><%= movie.description || "Description not available." %></p>
 
           <% if (movie.trailer && movie.trailer.includes("youtu")) { %>
-            <iframe width="500" height="281" src="https://www.youtube.com/embed/<%= movie.trailer.split('v=')[1] %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          <% } else if (movie.trailer) { %>
-            <video controls>
-              <source src="<%= movie.trailer %>" alt="<%= movie.title %>" width="500" type="video/mp4">
-            </video>
+            <iframe 
+              width="800" 
+              height="481" 
+              src="https://www.youtube.com/embed/<%= movie.trailer.split('youtu.be/')[1].split('?')[0] %>" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen
+            ></iframe>
           <% } else { %>
             <p>No trailer available</p>
           <% } %>
