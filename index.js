@@ -13,8 +13,8 @@ app.use(express.static("assets"));
 const db = new pg.Client({
   user: "postgres",
   host: "localhost",
-  database: "movies",
-  password: "123456",  
+  database: "postgres",
+  password: "1234",  
   port: 5432,
 });
 db.connect()
@@ -34,7 +34,7 @@ app.post("/recommend", async (req, res) => {
   
     try {
         const result = await db.query(
-            "SELECT movie, image_url FROM movies WHERE LOWER(mood) = LOWER($1) AND LOWER(genre) = LOWER($2)",
+            "SELECT movies, image_url FROM movies WHERE LOWER(mood) = LOWER($1) AND LOWER(genre) = LOWER($2)",
             [mood, genre]
           );
 
