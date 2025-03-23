@@ -27,6 +27,7 @@ app.get("/", (req, res) => {
   res.render("index.ejs");
 });
 
+// for recommend button
 app.post("/recommend", async (req, res) => {
     const { mood, genre } = req.body;
     console.log("Received Mood:", mood);
@@ -44,6 +45,24 @@ app.post("/recommend", async (req, res) => {
       console.log(result.rows);
     } catch (err) {
       console.error("Error fetching movies:", err);
+      console.error(err.stack);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+
+  // for surprise me button
+  app.post("/surprise", async (req, res) => {
+    try {
+      const result = await db.query(
+        "SELECT movies, image_url, trailer, description FROM movies ORDER BY RANDOM() LIMIT 1"
+      );
+  
+      console.log("Surprise Movie:", result.rows);
+  
+      res.render("results.ejs", { movies: result.rows });
+      console.log(result.rows);
+    } catch (err) {
+      console.error("Error fetching random movie:", err);
       console.error(err.stack);
       res.status(500).send("Internal Server Error");
     }
