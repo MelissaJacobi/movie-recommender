@@ -9,15 +9,33 @@
 <body>
   <%- include("partials/header") %>
   <main class="main">
-    <h1>Recommended Movies</h1>
+    <h1>Curated just for you, a movie experience that fits your vibe perfectly.</h1>
 
     <% if (movies && movies.length > 0) { %>
-      <ul>
         <% movies.forEach(movie => { %>
-          <li class="result"><%= movie.movie %></li>
-          <img src="<%= movie.image_url %>" alt="<%= movie.movie %>" width="200">
+          <div>
+            <img src="<%= movie.image_url %>" alt="<%= movie.movies %>" width="200">
+            <div class="desc">
+              <h2><%= movie.movies %></h2>
+              <h3>Description</h3>
+              <p><%= movie.description || "Description not available." %></p>
+            </div>
+          </div>
+
+          <% if (movie.trailer && movie.trailer.includes("youtu")) { %>
+            <iframe 
+              width="800" 
+              height="481" 
+              src="https://www.youtube.com/embed/<%= movie.trailer.split('youtu.be/')[1].split('?')[0] %>" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen
+            ></iframe>
+          <% } else { %>
+            <p>No trailer available</p>
+          <% } %>
+
         <% }) %>
-      </ul>
     <% } else { %>
       <p>No movies found matching your criteria.</p>
     <% } %>
