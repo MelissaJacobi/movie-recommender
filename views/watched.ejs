@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Watched Movies</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<%- include("partials/header") %>
+
+<main class="main">
+  <h1>Watched</h1>
+  <div id="watched-list" class="watchlist-container"></div>
+  <a href="/">Back to Home</a>
+</main>
+
+<div id="toast" class="toast"></div>
+
+<script>
+  const watched = JSON.parse(localStorage.getItem("watched") || "[]");
+  const ratings = JSON.parse(localStorage.getItem("ratings") || "{}");
+  const notes = JSON.parse(localStorage.getItem("notes") || "{}");
+  const submittedReviews = JSON.parse(localStorage.getItem("submittedReviews") || "{}");
+  const container = document.getElementById("watched-list");
+
+  function renderWatched() {
+    container.innerHTML = "";
+
+    if (watched.length === 0) {
+      container.innerHTML = "<p>You haven’t marked any movies as watched yet.</p>";
+      return;
+    }
+
+    watched.forEach((movie, index) => {
+      const rating = ratings[movie.movie] || 0;
+      const draftNote = notes[movie.movie] || "";
+      const postedReview = submittedReviews[movie.movie] || "";
+
+      const starsHtml = Array.from({ length: 5 }, (_, i) => `
+        <span class="star ${i + 1 <= rating ? 'selected' : ''}" data-star="${i + 1}" data-movie="${movie.movie}">★</span>
+      `).join('');
+
+      container.innerHTML += `
+        <div class="movie-card">
+          <img src="${movie.image_url}" alt="${movie.movie}" />
+          <h3>${movie.movie}</h3>
+          <p>${movie.description}</p>
+
+          <label class="review-block">⭐ Rating:</label>
+          <div class="stars" data-movie="${movie.movie}">${starsHtml}</div>
+
+          <label>📝 Notes:</label>
+          <div class="review-display" id="review-display-${index}">
+            ${postedReview 
+              ? `
+                <div class="note-block">
+                  <p class="posted-review">${postedReview}</p>
+                  <div class="review-buttons">
+                    <button class="submit-btn small" onclick="enableEdit('${movie.movie}', ${index})">Edit</button>
+                    <button class="submit-btn small" onclick="removeWatched(${index})">Remove</button>
+                  </div>
+                </div>
+              `
+              : `
+                <div class="note-block">
+                  <textarea class="note-area" data-movie="${movie.movie}" placeholder="Write your thoughts...">${draftNote}</textarea>
+                  <div class="review-buttons">
+                    <button class="submit-btn" onclick="submitReview('${movie.movie}', ${index})">Post Review</button>
+                    <button class="submit-btn" onclick="removeWatched(${index})">Remove</button>
+                  </div>
+                </div>
+              `
+            }
+          </div>
+        </div>
+      `;
+    });
+
+    attachReviewEvents();
+  }
+
+  function attachReviewEvents() {
+    document.querySelectorAll(".star").forEach(star => {
+      star.addEventListener("click", e => {
+        const movie = e.target.dataset.movie;
+        const selected = parseInt(e.target.dataset.star);
+        ratings[movie] = selected;
+        localStorage.setItem("ratings", JSON.stringify(ratings));
+        renderWatched();
+      });
+    });
+
+    document.querySelectorAll(".note-area").forEach(noteBox => {
+      noteBox.addEventListener("input", e => {
+        const movie = e.target.dataset.movie;
+        notes[movie] = e.target.value;
+        localStorage.setItem("notes", JSON.stringify(notes));
+      });
+    });
+  }
+
+  function submitReview(movieTitle, index) {
+    const textarea = document.querySelector(`textarea[data-movie="${movieTitle}"]`);
+    const text = textarea.value.trim();
+    if (!text) return showToast("Please write something first.");
+
+    submittedReviews[movieTitle] = text;
+    localStorage.setItem("submittedReviews", JSON.stringify(submittedReviews));
+
+    showToast(` Review for "${movieTitle}" posted!`);
+    renderWatched();
+  }
+
+  function enableEdit(movieTitle, index) {
+    const reviewDiv = document.getElementById(`review-display-${index}`);
+    const existingNote = submittedReviews[movieTitle] || "";
+    
+    reviewDiv.innerHTML = `
+      <div class="note-block">
+        <textarea class="note-area" data-movie="${movieTitle}">${existingNote}</textarea>
+        <div class="review-buttons">
+          <button class="submit-btn" onclick="submitReview('${movieTitle}', ${index})">Update Review</button>
+          <button class="submit-btn" onclick="removeWatched(${index})">Remove</button>
+        </div>
+      </div>
+    `;
+
+    document.querySelector(`textarea[data-movie="${movieTitle}"]`).addEventListener("input", e => {
+      notes[movieTitle] = e.target.value;
+      localStorage.setItem("notes", JSON.stringify(notes));
+    });
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById("toast");
+    toast.innerText = msg;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2000);
+  }
+
+  function removeWatched(index) {
+  watched.splice(index, 1);
+  localStorage.setItem("watched", JSON.stringify(watched));
+  renderWatched();
+  showToast("Movie removed from Watched list.");
+  }
+
+  renderWatched();
+</script>
+
+<%- include("partials/footer") %>
+</body>
+</html>
