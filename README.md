@@ -10,7 +10,7 @@
 ## Arabella
 
 - App styling
-- Created "Surprise Me" button
+- Created "Surprise Me" button and results
 - Added descriptions and trailers to generated movies
 
 ## Kelly 
