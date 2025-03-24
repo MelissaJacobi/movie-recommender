@@ -31,12 +31,32 @@
 .header {
     position: absolute;
     top: 30px;
-    left: 30px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.header > div {
+    display: flex; 
+    gap: 0.25rem; 
 }
 
 .header h1 {
     font-size: 12px;
     font-weight: 600;
+}
+
+.home-link {
+    background: none !important; 
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: black; 
+    margin-right: -1rem !important; 
+    width: auto !important; 
 }
 
 .form-container {
@@ -67,6 +87,12 @@
     color: #FFFBF1;
     text-decoration: none;
     text-align: center;
+    margin-left: -0.05rem; 
+}
+
+.submit-btn:hover {
+    cursor: pointer;
+    background-color: rgb(49, 48, 48); 
 }
 
 .footer {
@@ -133,3 +159,199 @@ img {
 iframe {
     margin: 2rem;
 }
+
+/* watchlist */
+
+.watchlist-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.watchlist-link {
+    background: none; 
+    color: black; 
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0; 
+    padding: 0; 
+    width: 100px !important; 
+}
+
+.watched-link {
+    background: none; 
+    color: black; 
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0; 
+    padding: 0; 
+    width: 120px !important; 
+}
+
+.watchlist-link:hover {
+    text-decoration: underline; 
+}
+
+.watched-link:hover {
+    text-decoration: underline; 
+}
+
+.movie-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px; 
+    height: auto; 
+    background: none;
+    border: 1px solid black;
+    padding: 1.5rem;
+    transition: transform 0.2s ease;
+    box-sizing: border-box;
+}
+
+.movie-card:hover {
+    transform: scale(1.02);
+}
+
+.movie-card img {
+    width: 70%;
+}
+
+.movie-card h3 {
+    font-size: 18px;
+    text-align: center;
+    margin: 0.5rem 0;
+}
+
+.movie-card p {
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+.movie-card a,
+.movie-card button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0.25rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.movie-card button:hover {
+    background: #333; 
+}
+
+.movie-card .btn-row {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #333;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+}
+
+.toast.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.recommendation-container {
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    gap: 1rem;
+  }
+  
+  .movie-title {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 0.5rem;
+  }
+  
+  .content-row {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  /* star rating */
+  .stars {
+    margin: 0.5rem 0;
+  }
+  .star {
+    font-size: 20px;
+    color: #ccc;
+    cursor: pointer;
+  }
+  .star.selected {
+    color: gold;
+  }
+  
+  /* notes */
+  textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0.5rem 0 1rem 0;
+    border-radius: 8px;
+    font-family: 'Inter';
+    font-size: 14px;
+    resize: vertical;
+  }
+  
+  .rating-review {
+    margin-top: 3rem;
+  }
+
+  .note-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .note-area {
+    margin-top: -3rem;
+    width: 100%; 
+  }
+  
+  .posted-review {
+    border: 1px solid black; 
+    padding: 1rem; 
+    margin-top: -2.75rem; 
+  }
+
+  .review-block {
+    margin-top: 2rem; 
+  }
+
+  .review-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem; 
+  }
+
+  .review-display {
+    width: 90%; 
+    margin-left: -3rem; 
+  }

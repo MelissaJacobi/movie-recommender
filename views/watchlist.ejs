@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Watch Later</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include("partials/header") %>
+
+  <main class="main">
+    <h1>Watch Later</h1>
+    <div id="watchlist" class="watchlist-container"></div>
+    <a href="/">Back to Home</a>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    let saved = JSON.parse(localStorage.getItem("watchLater") || "[]");
+    let watched = JSON.parse(localStorage.getItem("watched") || "[]");
+    const container = document.getElementById("watchlist");
+
+    function renderList() {
+      container.innerHTML = "";
+      if (saved.length === 0) {
+        container.innerHTML = "<p>No movies saved yet.</p>";
+        return;
+      }
+
+      saved.forEach((movie, index) => {
+        container.innerHTML += `
+          <div class="movie-card">
+            <img src="${movie.image_url}" alt="${movie.movie}" />
+            <h3>${movie.movie}</h3>
+            <p>${movie.description}</p>
+            <div class="btn-row">
+              <a href="${movie.trailer}" target="_blank">▶ Trailer</a>
+              <button onclick="markAsWatched(${index})">Watched</button>
+              <button onclick="removeMovie(${index})">Remove</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function markAsWatched(index) {
+      const movie = saved.splice(index, 1)[0];
+      watched.push(movie);
+      localStorage.setItem("watchLater", JSON.stringify(saved));
+      localStorage.setItem("watched", JSON.stringify(watched));
+      renderList();
+      showToast("Moved to Watched!");
+    }
+
+    function removeMovie(index) {
+      saved.splice(index, 1);
+      localStorage.setItem("watchLater", JSON.stringify(saved));
+      renderList();
+      showToast("Removed.");
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.innerText = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2000);
+    }
+
+    renderList();
+  </script>
+
+  <%- include("partials/footer") %>
+</body>
+</html>

@@ -14,7 +14,7 @@ const db = new pg.Client({
   user: "postgres",
   host: "localhost",
   database: "postgres",
-  password: "123456",  
+  password: "1234",  
   port: 5432,
 });
 db.connect()
@@ -27,6 +27,14 @@ app.get("/", (req, res) => {
   res.render("index.ejs");
 });
 
+app.get("/watchlist", (req, res) => {
+  res.render("watchlist.ejs");
+});
+
+app.get("/watched", (req, res) => {
+  res.render("watched.ejs");
+});
+
 // for recommend button
 app.post("/recommend", async (req, res) => {
     const { mood, genre } = req.body;
@@ -35,7 +43,7 @@ app.post("/recommend", async (req, res) => {
   
     try {
       const result = await db.query(
-          "SELECT movies, image_url, trailer, description FROM movies WHERE LOWER(mood) = LOWER($1) AND LOWER(genre) = LOWER($2)",
+          "SELECT movie, image_url, trailer, description FROM movies WHERE LOWER(mood) = LOWER($1) AND LOWER(genre) = LOWER($2)",
           [mood, genre]
         );
 
@@ -52,7 +60,7 @@ app.post("/recommend", async (req, res) => {
   app.post("/surprise", async (req, res) => {
     try {
       const result = await db.query(
-        "SELECT movies, image_url, trailer, description FROM movies ORDER BY RANDOM() LIMIT 1"
+        "SELECT movie, image_url, trailer, description FROM movies ORDER BY RANDOM() LIMIT 1"
       );
   
       console.log("Surprise Movie:", result.rows);
